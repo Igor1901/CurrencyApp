@@ -11,6 +11,12 @@ import SnapKit
 class ExchangeView: UIView {
 
     // MARK: - UI Elements
+    
+    let gradientLayer: CAGradientLayer = {
+        let gradient = CAGradientLayer()
+        return gradient
+    }()
+
 
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -59,6 +65,15 @@ class ExchangeView: UIView {
         return firstAmountMoney.text
     }
     
+    //символ валюты $
+    let currencySymbolLabel1: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 20)
+        label.text = "$"
+        return label
+    }()
+    
     //второе облачко
     private let secondView: UIView = {
         let view = UIView()
@@ -93,6 +108,16 @@ class ExchangeView: UIView {
         textField.textAlignment = .right
         return textField
     }()
+    
+    //символ валюты $
+    let currencySymbolLabel2: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 20)
+        label.text = "₽"
+        return label
+    }()
+    
     // button
     let exchangeMoneyButton: UIButton = {
         let button = UIButton()
@@ -124,23 +149,38 @@ class ExchangeView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        setupGradient()
         setupConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = bounds // установка размеров градиента после установки размеров представления
+    }
 
+    func setupGradient() {
+        gradientLayer.frame = bounds
+        gradientLayer.colors = [UIColor(red: 248 / 255, green: 169 / 255, blue: 94 / 255, alpha: 1).cgColor, UIColor(red: 151 / 255, green: 79 / 255, blue: 104 / 255, alpha: 1).cgColor]
+        gradientLayer.startPoint = CGPoint(x: 0.5, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 0.5, y: 1)
+        layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
     func setupConstraints(){
         addSubview(titleLabel)
         addSubview(firstView)
         firstView.addSubview(firstСurrency)
         firstView.addSubview(firstAmountMoney)
+        firstView.addSubview(currencySymbolLabel1)
         
         addSubview(secondView)
         secondView.addSubview(secondСurrency)
         secondView.addSubview(secondAmountMoney)
+        secondView.addSubview(currencySymbolLabel2)
         
         addSubview(exchangeMoneyButton)
         exchangeMoneyButton.addSubview(exchangeMoneyLable)
@@ -171,6 +211,12 @@ class ExchangeView: UIView {
             make.trailing.equalToSuperview().offset(-25) // Отступ справа
             make.leading.equalTo(firstСurrency.snp.trailing).offset(10) // Отступ слева от firstСurrency
         }
+        
+        currencySymbolLabel1.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().offset(0)
+            make.leading.equalTo(firstAmountMoney.snp.trailing).offset(0)
+        }
         //MARK: - 2
         secondView.snp.makeConstraints { make in
             make.top.equalTo(firstView.snp.bottom).offset(30)
@@ -188,8 +234,14 @@ class ExchangeView: UIView {
         
         secondAmountMoney.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().offset(-10) // Отступ справа
+            make.trailing.equalToSuperview().offset(-25) // Отступ справа
             make.leading.equalTo(secondСurrency.snp.trailing).offset(10) // Отступ слева от firstСurrency
+        }
+        
+        currencySymbolLabel2.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalToSuperview().offset(0)
+            make.leading.equalTo(secondAmountMoney.snp.trailing).offset(0)
         }
         // button
         exchangeMoneyButton.snp.makeConstraints { make in

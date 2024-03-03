@@ -17,12 +17,6 @@ class ExchangeViewController: UIViewController, ViewModelType {
     
     var exchangeView = ExchangeView()
     
-    /*
-    let currencyAbbreviations = [
-        "USD", "EUR", "JPY", "GBP", "AUD",
-        "CAD", "CHF", "CNY", "SEK", "NZD",
-        "RUB"
-    ]*/
 
     let currencyAbbreviations: [AbbreviationsModel] = [
         AbbreviationsModel(name: "USD", symbol: "$"),
@@ -88,14 +82,20 @@ class ExchangeViewController: UIViewController, ViewModelType {
         // Вставить выбранное значение из пикера в текстовое поле.
         let selectedValue = exchangeView.pickerView.selectedRow(inComponent: 0) // Получите выбранное значение из пикера
         exchangeView.firstСurrency.text = currencyAbbreviations[selectedValue].name // Вставьте его обратно в текстовое поле
+        // Установите символ выбранной валюты в лейбл
+        exchangeView.currencySymbolLabel1.text = currencyAbbreviations[selectedValue].symbol
     }
     
     @objc func pickerDoneButtonTapped2() {
         // Скрыть пикер после нажатия кнопки "Готово".
-        exchangeView.firstСurrency.resignFirstResponder()
+        //exchangeView.firstСurrency.resignFirstResponder()
+        exchangeView.secondСurrency.resignFirstResponder()
         // Вставить выбранное значение из пикера в текстовое поле.
         let selectedValue = exchangeView.pickerView.selectedRow(inComponent: 0) // Получите выбранное значение из пикера
         exchangeView.secondСurrency.text = currencyAbbreviations[selectedValue].name // Вставьте его обратно в текстовое поле
+        // Установите символ выбранной валюты в лейбл
+        exchangeView.currencySymbolLabel2.text = currencyAbbreviations[selectedValue].symbol
+        
     }
     
     @objc private func convertButtonTapped() {
@@ -105,7 +105,7 @@ class ExchangeViewController: UIViewController, ViewModelType {
         
         convertMoney(fromCurrency: fromCurrency, toCurrency: toCurrency, amount: Double(amount) ?? 0.0) { convertedValue in
             DispatchQueue.main.async { [weak self] in
-                self?.exchangeView.secondAmountMoney.text = String(convertedValue)
+                self?.exchangeView.secondAmountMoney.text = String(format: "%.2f", convertedValue)
             }
         }
     }
