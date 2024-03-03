@@ -19,8 +19,10 @@
 		F12A57522B8E90C4008631AF /* ConvertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12A57512B8E90C4008631AF /* ConvertModel.swift */; };
 		F16D4B402B8F906000E20069 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16D4B3F2B8F906000E20069 /* ViewModel.swift */; };
 		F16D4B422B93C44B00E20069 /* AbbreviationsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16D4B412B93C44B00E20069 /* AbbreviationsModel.swift */; };
-		F16D4B462B94ADDA00E20069 /* Currency ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16D4B452B94ADDA00E20069 /* Currency ListViewController.swift */; };
-		F16D4B482B94ADF800E20069 /* Currency ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16D4B472B94ADF800E20069 /* Currency ListView.swift */; };
+		F16D4B462B94ADDA00E20069 /* CurrencyListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16D4B452B94ADDA00E20069 /* CurrencyListViewController.swift */; };
+		F16D4B482B94ADF800E20069 /* CurrencyListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16D4B472B94ADF800E20069 /* CurrencyListView.swift */; };
+		F16D4B4A2B94AEBF00E20069 /* CurrencyListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16D4B492B94AEBF00E20069 /* CurrencyListModel.swift */; };
+		F16D4B4C2B94B82E00E20069 /* CurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F16D4B4B2B94B82E00E20069 /* CurrencyTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,8 +38,10 @@
 		F12A57512B8E90C4008631AF /* ConvertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvertModel.swift; sourceTree = "<group>"; };
 		F16D4B3F2B8F906000E20069 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		F16D4B412B93C44B00E20069 /* AbbreviationsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbbreviationsModel.swift; sourceTree = "<group>"; };
-		F16D4B452B94ADDA00E20069 /* Currency ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Currency ListViewController.swift"; sourceTree = "<group>"; };
-		F16D4B472B94ADF800E20069 /* Currency ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Currency ListView.swift"; sourceTree = "<group>"; };
+		F16D4B452B94ADDA00E20069 /* CurrencyListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyListViewController.swift; sourceTree = "<group>"; };
+		F16D4B472B94ADF800E20069 /* CurrencyListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyListView.swift; sourceTree = "<group>"; };
+		F16D4B492B94AEBF00E20069 /* CurrencyListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyListModel.swift; sourceTree = "<group>"; };
+		F16D4B4B2B94B82E00E20069 /* CurrencyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,7 @@
 			children = (
 				F12A57512B8E90C4008631AF /* ConvertModel.swift */,
 				F16D4B412B93C44B00E20069 /* AbbreviationsModel.swift */,
+				F16D4B492B94AEBF00E20069 /* CurrencyListModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -131,8 +136,9 @@
 		F16D4B442B94AC8E00E20069 /* View2 */ = {
 			isa = PBXGroup;
 			children = (
-				F16D4B452B94ADDA00E20069 /* Currency ListViewController.swift */,
-				F16D4B472B94ADF800E20069 /* Currency ListView.swift */,
+				F16D4B452B94ADDA00E20069 /* CurrencyListViewController.swift */,
+				F16D4B472B94ADF800E20069 /* CurrencyListView.swift */,
+				F16D4B4B2B94B82E00E20069 /* CurrencyTableViewCell.swift */,
 			);
 			path = View2;
 			sourceTree = "<group>";
@@ -215,12 +221,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				F12A56FD2B890D56008631AF /* ExchangeViewController.swift in Sources */,
-				F16D4B462B94ADDA00E20069 /* Currency ListViewController.swift in Sources */,
+				F16D4B462B94ADDA00E20069 /* CurrencyListViewController.swift in Sources */,
 				F12A57522B8E90C4008631AF /* ConvertModel.swift in Sources */,
 				F12A56F92B890D56008631AF /* AppDelegate.swift in Sources */,
+				F16D4B4C2B94B82E00E20069 /* CurrencyTableViewCell.swift in Sources */,
 				F12A574F2B8E8C71008631AF /* NetworkManager.swift in Sources */,
+				F16D4B4A2B94AEBF00E20069 /* CurrencyListModel.swift in Sources */,
 				F12A570D2B890E66008631AF /* SceneDelegate.swift in Sources */,
-				F16D4B482B94ADF800E20069 /* Currency ListView.swift in Sources */,
+				F16D4B482B94ADF800E20069 /* CurrencyListView.swift in Sources */,
 				F16D4B422B93C44B00E20069 /* AbbreviationsModel.swift in Sources */,
 				F12A57102B89275D008631AF /* ExchangeView.swift in Sources */,
 				F16D4B402B8F906000E20069 /* ViewModel.swift in Sources */,

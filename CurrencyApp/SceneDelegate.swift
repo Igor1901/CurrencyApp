@@ -16,21 +16,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITabBarControllerDeleg
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         
-        let book = ExchangeViewController()
-        book.title = "book"
+        let exchange = ExchangeViewController()
+        exchange.title = "Exchange"
         
-        //let trip = TripViewController()
-        //trip.title = "trip"
+        let list = CurrencyListViewController()
+        list.title = "List"
         
         
         
-        book.tabBarItem = UITabBarItem(title: "Book", image: nil, selectedImage: nil)
+        exchange.tabBarItem = UITabBarItem(title: "Exchange", image: nil, selectedImage: nil)
         
-        //trip.tabBarItem = UITabBarItem(title: "Trip", image: UIImage(named: "world"), selectedImage: nil)
+        list.tabBarItem = UITabBarItem(title: "List", image: nil, selectedImage: nil)
         
         
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [book]
+        tabBarController.viewControllers = [exchange, list]
         tabBarController.delegate = self
         
         window.rootViewController = tabBarController

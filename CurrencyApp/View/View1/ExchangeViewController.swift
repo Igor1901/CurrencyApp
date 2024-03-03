@@ -51,8 +51,17 @@ class ExchangeViewController: UIViewController, ViewModelType {
         exchangeView.pickerView.delegate = self
         exchangeView.pickerView.dataSource = self
         
-        
-        
+        //Вызов метода fetchCurrencyData с указанием базовой валюты
+        networkManager.getCurrencyList(fromCurrency: "EUR") { currencyResponse in
+            if let currencyResponse = currencyResponse {
+                // Ваши действия с полученными данными currencyResponse здесь
+                // Например, обновление интерфейса с использованием полученных данных
+                print("Received currency data: \(currencyResponse)")
+            } else {
+                // Обработка ситуации, если данные не были получены
+                print("Failed to fetch currency data")
+            }
+        }
 
     }
     

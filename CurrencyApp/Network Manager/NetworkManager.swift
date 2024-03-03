@@ -53,5 +53,36 @@ class NetworkManager{
         }
         task.resume()
     }
+    
+    func getCurrencyList(fromCurrency: String, completion: @escaping (CurrencyListModel?) -> Void) {
+        guard var urlComponents = URLComponents(string: "https://api.currencybeacon.com/v1/latest") else { return }
+        
+        
+        
+        urlComponents.queryItems = [
+            URLQueryItem(name: "api_key", value: "xsLvqVVp9NvGaqGbfm3hKFrQEIRiRrnP"),
+            URLQueryItem(name: "base", value: fromCurrency)
+        ]
+        
+        guard let url = urlComponents.url else { return }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else {
+                print("Error: \(error?.localizedDescription ?? "Unknown error")")
+                completion(nil)
+                return
+            }
+            
+            do {
+                let decoder = JSONDecoder()
+                let currencyResponse = try decoder.decode(CurrencyListModel.self, from: data)
+                print("Currency data received: \(currencyResponse)")
+                completion(currencyResponse)
+            } catch {
+                print("Error decoding currency data: \(error.localizedDescription)")
+                completion(nil)
+            }
+        }.resume()
+    }
 
 }
