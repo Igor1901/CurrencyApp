@@ -11,7 +11,5 @@ import Foundation
 struct CurrencyListModel: Codable {
     let date: String
     let base: String
-    let rates: [String: Double]
+    var rates: [String: Double]
 }
-
-

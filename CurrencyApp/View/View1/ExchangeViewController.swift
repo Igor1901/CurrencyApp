@@ -9,6 +9,8 @@ import UIKit
 import SnapKit
 
 class ExchangeViewController: UIViewController, ViewModelType {
+    var currencyAbbreviations: [AbbreviationsModel] = []
+    
     
     func convertMoney(fromCurrency: String, toCurrency: String, amount: Double, completion: @escaping (Double) -> Void) {
         viewModel.convertMoney(fromCurrency: fromCurrency, toCurrency: toCurrency, amount: amount, completion: completion)
@@ -18,23 +20,12 @@ class ExchangeViewController: UIViewController, ViewModelType {
     var exchangeView = ExchangeView()
     
 
-    let currencyAbbreviations: [AbbreviationsModel] = [
-        AbbreviationsModel(name: "USD", symbol: "$"),
-        AbbreviationsModel(name: "EUR", symbol: "€"),
-        AbbreviationsModel(name: "JPY", symbol: "¥"),
-        AbbreviationsModel(name: "GBP", symbol: "£"),
-        AbbreviationsModel(name: "AUD", symbol: "$"),
-        AbbreviationsModel(name: "CAD", symbol: "$"),
-        AbbreviationsModel(name: "CHF", symbol: "Fr."),
-        AbbreviationsModel(name: "CNY", symbol: "¥"),
-        AbbreviationsModel(name: "SEK", symbol: "kr"),
-        AbbreviationsModel(name: "NZD", symbol: "$"),
-        AbbreviationsModel(name: "RUB", symbol: "₽")
-    ]
+    
     
     let networkManager = NetworkManager()
     let viewModel = ViewModel()
     
+    //let currencyAbbreviations = viewModel.currencyAbbreviations
     
     override func loadView() {
         view = exchangeView
@@ -90,9 +81,9 @@ class ExchangeViewController: UIViewController, ViewModelType {
         exchangeView.firstСurrency.resignFirstResponder()
         // Вставить выбранное значение из пикера в текстовое поле.
         let selectedValue = exchangeView.pickerView.selectedRow(inComponent: 0) // Получите выбранное значение из пикера
-        exchangeView.firstСurrency.text = currencyAbbreviations[selectedValue].name // Вставьте его обратно в текстовое поле
+        exchangeView.firstСurrency.text = viewModel.currencyAbbreviations[selectedValue].name // Вставьте его обратно в текстовое поле
         // Установите символ выбранной валюты в лейбл
-        exchangeView.currencySymbolLabel1.text = currencyAbbreviations[selectedValue].symbol
+        exchangeView.currencySymbolLabel1.text = viewModel.currencyAbbreviations[selectedValue].symbol
     }
     
     @objc func pickerDoneButtonTapped2() {
@@ -101,9 +92,9 @@ class ExchangeViewController: UIViewController, ViewModelType {
         exchangeView.secondСurrency.resignFirstResponder()
         // Вставить выбранное значение из пикера в текстовое поле.
         let selectedValue = exchangeView.pickerView.selectedRow(inComponent: 0) // Получите выбранное значение из пикера
-        exchangeView.secondСurrency.text = currencyAbbreviations[selectedValue].name // Вставьте его обратно в текстовое поле
+        exchangeView.secondСurrency.text = viewModel.currencyAbbreviations[selectedValue].name // Вставьте его обратно в текстовое поле
         // Установите символ выбранной валюты в лейбл
-        exchangeView.currencySymbolLabel2.text = currencyAbbreviations[selectedValue].symbol
+        exchangeView.currencySymbolLabel2.text = viewModel.currencyAbbreviations[selectedValue].symbol
         
     }
     
@@ -126,10 +117,10 @@ extension ExchangeViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
 
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return currencyAbbreviations.count // Количество элементов в списке валют.
+        return viewModel.currencyAbbreviations.count // Количество элементов в списке валют.
     }
 
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return currencyAbbreviations[row].name // Текст для каждого элемента в списке валют.
+        return viewModel.currencyAbbreviations[row].name // Текст для каждого элемента в списке валют.
     }
 }

@@ -11,8 +11,10 @@ import SnapKit
 class CurrencyListViewController: UIViewController {
 
     var listView = CurrencyListView()
+    var currencyListModel: CurrencyListModel?
+    var multiplier: Double = 100.0 // Множитель для указания суммы для перевода
     
-    let currencyAbbreviations: [AbbreviationsModel] = [
+    var currencyAbbreviations: [AbbreviationsModel] = [
         AbbreviationsModel(name: "USD", symbol: "$"),
         AbbreviationsModel(name: "EUR", symbol: "€"),
         AbbreviationsModel(name: "JPY", symbol: "¥"),
@@ -38,6 +40,14 @@ class CurrencyListViewController: UIViewController {
         
         listView.pickerView.delegate = self
         listView.pickerView.dataSource = self
+        
+        listView.tableView.dataSource = self
+        listView.tableView.delegate = self
+
+        listView.exchangeMoneyButton.addTarget(self, action: #selector(exchangeMoneyButtonTapped), for: .touchUpInside)
+        
+        // Пример добавления тестовых данных
+        listView.tableView.reloadData()
     }
     func setupTarget(){
         //listView.exchangeMoneyButton.addTarget(self, action: #selector(convertButtonTapped), for: .touchUpInside)
@@ -63,9 +73,29 @@ class CurrencyListViewController: UIViewController {
         // Установите символ выбранной валюты в лейбл
         listView.currencySymbolLabel1.text = currencyAbbreviations[selectedValue].symbol
     }
+    
+    @objc func exchangeMoneyButtonTapped() {
+        guard let fromCurrency = listView.firstСurrency.text else { return }
+        
+        
+        NetworkManager().getCurrencyList(fromCurrency: fromCurrency) { [weak self] currencyListModel in
+            guard let self = self, let currencyListModel = currencyListModel else { return }
+            
+            
+            // Обновляем модель данных для таблицы
+            self.currencyListModel = currencyListModel
+            
 
-  
+            // Сортируем данные перед обновлением таблицы
+            let sortedRates = currencyListModel.rates.sorted { $0.key < $1.key }
+            self.currencyListModel?.rates = Dictionary(uniqueKeysWithValues: sortedRates)
 
+            
+            DispatchQueue.main.async {
+                self.listView.tableView.reloadData() // Обновляем интерфейс
+            }
+        }
+    }
 }
 
 extension CurrencyListViewController: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -82,3 +112,39 @@ extension CurrencyListViewController: UIPickerViewDelegate, UIPickerViewDataSour
     }
 }
 
+extension CurrencyListViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return currencyListModel?.rates.count ?? 0 // Возвращаем количество элементов в массиве
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: CurrencyTableViewCell.reuseIdentifier, for: indexPath) as! CurrencyTableViewCell
+                
+        // Получаем данные для текущей строки
+        guard let currencyListModel = currencyListModel else { return cell }
+        let currency = Array(currencyListModel.rates.keys)[indexPath.row]
+        let rate = (currencyListModel.rates[currency] ?? 0.0) * multiplier // Умножаем курс на множитель
+        
+        // Конфигурируем ячейку данными
+        cell.configure(with: currency, rate: rate)
+        
+        return cell
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension CurrencyListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60 // Устанавливаем высоту ячейки
+    }
+}
+
+extension CurrencyListViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let text = textField.text, let amount = Double(text) {
+            multiplier = amount // Обновляем множитель по завершении редактирования текстового поля
+            print("wkfgoejroigjilejglierjogjerogjioerjgoi", multiplier, amount)
+        }
+    }
+}

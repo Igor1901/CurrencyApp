@@ -20,7 +20,7 @@ class CurrencyListView: UIView {
 
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Список валют"
+        label.text = "Обменный курс"
         label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
         label.textAlignment = .center
         return label
@@ -54,9 +54,9 @@ class CurrencyListView: UIView {
     }
     
     //firstAmountMoney
-    let firstAmountMoney: UITextField = {
-        let textField = UITextField()
-        textField.text = "0"
+    let firstAmountMoney: UILabel = {
+        let textField = UILabel()
+        textField.text = "1"
         textField.textAlignment = .right
         return textField
     }()
@@ -90,7 +90,7 @@ class CurrencyListView: UIView {
     
     let exchangeMoneyLable:UILabel = {
         let label = UILabel()
-        label.text = "Поменять деньги"
+        label.text = "Узнать стоимость"
         label.font = UIFont(name: "Overpass-Regular", size: 16)
         label.textColor = .black
         return label
@@ -102,6 +102,17 @@ class CurrencyListView: UIView {
     }()
 
     var pickerViewToolbar1: UIToolbar!
+    
+    //таблица
+    let tableView: UITableView = {
+        let  tableView = UITableView()
+        
+        tableView.separatorStyle = .none
+        tableView.layer.backgroundColor = UIColor.clear.cgColor
+        tableView.backgroundColor = .clear
+        tableView.register(CurrencyTableViewCell.self, forCellReuseIdentifier: CurrencyTableViewCell.reuseIdentifier)
+        return tableView
+    }()
 
     
     override init(frame: CGRect) {
@@ -139,6 +150,7 @@ class CurrencyListView: UIView {
         exchangeMoneyButton.addSubview(exchangeMoneyLable)
         
 
+        addSubview(tableView)
         
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide.snp.top).offset(20)
@@ -146,28 +158,28 @@ class CurrencyListView: UIView {
         }
         //MARK: - 1
         firstView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
             make.top.equalTo(titleLabel.snp.bottom).offset(40)
-            make.leading.equalTo(20)
-            make.trailing.equalTo(-20)
-            make.height.equalTo(80)
+            make.width.equalTo(249)
+            make.height.equalTo(70)
         }
         
         firstСurrency.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.leading.equalToSuperview().offset(10) // Отступ слева
+            make.leading.equalToSuperview().offset(15) // Отступ слева
             make.width.equalTo(50)
             make.height.equalTo(30)
         }
         
         firstAmountMoney.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().offset(-25) // Отступ справа
+            make.trailing.equalToSuperview().offset(-30) // Отступ справа
             make.leading.equalTo(firstСurrency.snp.trailing).offset(10) // Отступ слева от firstСurrency
         }
         
         currencySymbolLabel1.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().offset(0)
+            make.trailing.equalToSuperview().offset(-5)
             make.leading.equalTo(firstAmountMoney.snp.trailing).offset(0)
         }
         
@@ -182,6 +194,13 @@ class CurrencyListView: UIView {
         exchangeMoneyLable.snp.makeConstraints { make in
             make.centerY.equalTo(exchangeMoneyButton.snp.centerY)
             make.centerX.equalTo(exchangeMoneyButton.snp.centerX)
+        }
+        
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(exchangeMoneyButton.snp.bottom).offset(10)
+            make.leading.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
+            make.bottom.equalTo(safeAreaLayoutGuide)
         }
     }
     
